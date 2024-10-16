@@ -26,6 +26,11 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 # Install poetry
 RUN pip install poetry==$POETRY_VERSION
 
+# install postgres dependencies
+RUN apt-get update \
+    && apt-get -y install libpq-dev gcc \
+    && pip install psycopg2
+
 # Set working directory and copy dependency files
 WORKDIR $PYSETUP_PATH
 COPY poetry.lock pyproject.toml ./
