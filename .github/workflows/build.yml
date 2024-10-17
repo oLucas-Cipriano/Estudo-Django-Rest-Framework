@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
@@ -21,17 +21,11 @@ jobs:
 
     - name: Install poetry
       run: |
-        python -m ensurepip
-        python -m pip install --upgrade pip
-        python -m pip install --upgrade poetry
-
-    - name: View poetry --help
-      run: poetry --help
+        curl -sSL https://install.python-poetry.org | python3 -
+        poetry --version
 
     - name: Install dependencies
-      shell: bash
-      run: python -m poetry install
+      run: poetry install
 
     - name: Test
-      run: |
-        poetry run python manage.py test
+      run: poetry run python manage.py test
